@@ -323,13 +323,22 @@ body {
 
 	text-align: left;
 	font-size: 0.55em;
-	font-family: monospace;
+	font-family: Consolas, 'Courier New', Courier, monospace;
 	line-height: 1.2em;
 
 	word-wrap: break-word;
 
 	box-shadow: 0px 0px 6px rgba(0,0,0,0.3);
 }
+
+.reveal .aw {
+  width: auto;
+}
+
+.reveal .ib {
+  display: inline-block;
+}
+
 .reveal code {
 	font-family: monospace;
 }
@@ -1876,5 +1885,3 @@ body {
 .zoomed .reveal .roll span:after {
 	visibility: hidden;
 }
-
-

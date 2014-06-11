@@ -16,7 +16,7 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/default.css" id="theme">
 
 		<!-- For syntax highlighting -->
@@ -155,12 +155,12 @@
 					<script type="text/template">
 						## document.write?
 
-						<pre><code>&lt;script type="text/javascript"&gt;
+						<pre style="margin:0px;box-shadow:none;"><code>&lt;script type="text/javascript"&gt;
 								document.write( "<div>awesome ad!</div>" );
 						&lt;/script&gt;
 						</code></pre>
-						<pre><code><div>awesome ad!</div></code></pre> <!-- .element: class="fragment" -->
-						<pre><code><div>Page content</div></code></pre>
+						<pre style="margin:0px;box-shadow:none;"><code><div>awesome ad!</div></code></pre> <!-- .element: class="fragment" -->
+						<pre style="margin:0px;box-shadow:none;"><code><div>Page content</div></code></pre>
 
 
 						> Writes a string of text to a document stream...
@@ -194,7 +194,7 @@ $j.getScript(bannerUrl);
 						```
 
 						Note:
-						I heard others (google + others) had tried and failed, but they didn't say why.
+						I heard others (google + others) had tried and failed, but they didn’t say why.
 						Will also only work for 1 placement pr page
 
 						---
@@ -218,18 +218,15 @@ document.getElementById("foo-bar").innerHTML = "awesome ad!";
 
 						* Works with multiple positions
 						* Load (almost) any **third-party script asynchronously**
-				    * Does **not block rendering** of your page
-				        * Your visitors see your content earlier
-				        * DOMContentLoaded (a.k.a. $(doc).ready ) and window.onload triggered earlier
-				    * Load the **banners in parallel!** Except in IE ;(
-				        * Banners loads faster (at least in theory)
+						* Does **not block rendering** of your page
+							* Your visitors see your content earlier
+							* DOMContentLoaded (a.k.a. $(doc).ready ) and window.onload triggered earlier
+						* Load the **banners in parallel!** Except in IE ;(
+							* Banners loads faster (at least in theory)
 						* Handles **recursive scripts**
-						    * Inline and external javascript
-						    * Inline and external vbscript
+							* Inline and external javascript/vbscript
 						* Buffer document.write, flush on script load event
-						    * Handles document.getElementById from the buffer
-
-						Note: Inspired after JsConf.eu
+							* Handles document.getElementById from the buffer
 
 						---
 
@@ -253,13 +250,40 @@ document.getElementById("foo-bar").innerHTML = "awesome ad!";
 						* ...who knows?
 
 						</small>
+
+						Note:
+						crapLoader was only used at kart.finn.no with a limited set of ads
+						Needed something more robust for the rest of finn.no
+						Heard of Friendly Iframes
+
+						---
+
+						## 3rd attempt (2011)
+
+						* Real-estate team needed async loading of an ad
+						* Friendly iframes (FiF)
+						* Prototype-implementation
+
+						---
+
+						## 4th attempt (2012)
+
+						* Friendly iframe prototype evolved into WebAds
+						* Used for almost all ad positions for www.finn.no
+
+						---
+
+						## Problems with FiF/WebAds
+
+						* Ads still have access to all cookies and variables/DOM of parent
+						* Some ad-providers inject content into parent
+						  * Scary when non-devs start creating HTML5-ads
+						* Our implementation tried to solve too much
+						  * Not usable for others and high maintenance cost
+						* Desktop/Flash specific - Not mobile friendly
+
 					</script>
 				</section>
-
-
-
-
-
 
 				<section>
 					<h3>“Trusted” XSS for &nbsp;<img style="width:1.2em;position:relative;top:5px;" src="img/euro.png" alt="Screenshot of kart.finn.no with an ad" /></h3>
@@ -279,15 +303,26 @@ document.getElementById("foo-bar").innerHTML = "awesome ad!";
 					</aside>
 				</section>
 
-				<section>
-					<h2>m.finn.no</h2>
+				<section data-markdown data-separator="^---$">
+					<script type="text/template">
+						## 5th attempt - Garðr (2013/2014)
 
-					<!--iframe src="http://m.finn.no/bap/forsale/search.html" style="width:320px; height: 568px;"></iframe-->
-					<video src="video/mfinn.mov" class="stretch" style="width:600px; height:572px;" autoplay loop></video>
+						* Open Source
+						 - Force clean architecture
+						 - More use => more pressure on ad-providers
+						 - Contributions from others (hopefully)
+						* Small modular core with what most sites need
+						 - Small and mobile friendly (~5kB gzip * 2)
+						* Plugins for custom features
+						* Cross-domain support for security
+						 - Same origin policy prevents iframe from accessing parent
+						 - Use cross domain messaging (postMessage) for communication
+						* Responsive by default
+					</script>
 				</section>
 
 				<section>
-					<h2>Why Garðr</h2>
+					<h2>Why the name Garðr?</h2>
 					<blockquote>
 						<p><strong>garðr</strong>&nbsp;<span><abbr>m</abbr></span> (<i>genitive</i> <b>garðs</b>, <i>plural</i> <b>garðar</b>)</p>
 						<ol>
@@ -301,13 +336,290 @@ document.getElementById("foo-bar").innerHTML = "awesome ad!";
 							- <cite><a href="http://en.wiktionary.org/wiki/gar%C3%B0r">Wiktionary</a></cite>
 						</footer>
 					</blockquote>
+				</section>
 
+				<section data-markdown data-separator="^---$">
+					<script type="text/template">
+						## How?
+
+						<pre style="width: auto; display: inline-block; letter-spacing: 0.1px; line-height: 20px;">
+ ___________________________________________________________________________________
+|                                PUBLISHER SITE                                     |
+|                                                                                   |
+|                                                                                   |
+|                 ______________________________________________                    |
+|                |                                              |                   |
+|                |            BANNER INSIDE IFRAME              |                   |
+|                |             Garðr ext library                |                   |
+|                |                                              |                   |
+|                |_____________↓__postMessage__↑________________|                   |
+|                                                                                   |
+|                                                                                   |
+|                              Garðr host library                                   |
+|                                                                                   |
+|                                                                                   |
+|                 _____________↓__postMessage__↑________________                    |
+|                |                                              |                   |
+|                |            BANNER INSIDE IFRAME              |                   |
+|                |             Garðr ext library                |                   |
+|                |______________________________________________|                   |
+|                                                                                   |
+|___________________________________________________________________________________|
+						</pre>
+
+						---
+
+						## postMessage is weird
+
+						Awesome for simple stuff, but when you get a lot of messages
+
+						```js
+						window.addEventListener("message", function (event) {
+							// Wohoo, somebody sent me a message!
+							// But I don't know what it's for
+							// event.origin and event.source
+						});
+						```
+
+						---
+
+						## cross-domain-events
+
+						Created a micro-lib to
+
+						> Event-like api for postMessage to send objects between cross-domain frames
+
+						```
+// notify parent about page size
+xde.sendTo(window.top, "resize", {
+    width: iframe.clientWidth,
+    height: iframe.clientHeight
+});
+
+// parent page
+xde.on("resize", function (evt) {
+    var iframe = document.getElementById("theiframe");
+    iframe.style.width = evt.data.width;
+    iframe.style.height = evt.data.height;
+});
+						```
+
+						</script>
+					</section>
+
+					<section data-markdown data-separator="^---$" data-transition="fade">
+						<script type="text/template">
+						## Normal flow
+
+						<pre style="width: auto; display: inline-block; letter-spacing: 0.1px; line-height: 20px;">
+ ___________________________________________________________________________________
+|                                PUBLISHER SITE                                     |
+|                                                                                   |
+|                              Garðr host library                                   |
+|                                                                                   |
+|                                                                                   |
+|                                                                                   |
+|                                <strong>Create &lt;iframe&gt;</strong>                                    |
+|                               <strong>parameters as JSON</strong>                                  |
+|                                                                                   |
+|                                                                                   |
+|                                                                                   |
+|                                                                                   |
+|                                                                                   |
+|                                                                                   |
+|___________________________________________________________________________________|
+						</pre>
+
+						---
+
+						## Normal flow
+
+						<pre style="width: auto; display: inline-block; letter-spacing: 0.1px; line-height: 20px;">
+ ___________________________________________________________________________________
+|                                PUBLISHER SITE                                     |
+|                                                                                   |
+|                              Garðr host library                                   |
+|                                                                                   |
+|                                                                                   |
+|                 ______________________________________________                    |
+|                |                   <strong>IFRAME</strong>                     |                   |
+|                |                                              |                   |
+|                |              <strong>Load Garðr ext.js</strong>               |                   |
+|                |                                              |                   |
+|                |                                              |                   |
+|                |                                              |                   |
+|                |______________________________________________|                   |
+|                                                                                   |
+|___________________________________________________________________________________|
+						</pre>
+
+						---
+
+						## Normal flow
+
+						<pre style="width: auto; display: inline-block; letter-spacing: 0.1px; line-height: 20px;">
+ ___________________________________________________________________________________
+|                                PUBLISHER SITE                                     |
+|                                                                                   |
+|                              Garðr host library                                   |
+|                                                                                   |
+|                                                                                   |
+|                 ______________________________________________                    |
+|                |                   IFRAME                     |                   |
+|                |                                              |                   |
+|                |              Load Garðr ext.js               |                   |
+|                |        <strong>Read parameter-json from url/name</strong>     |                   |
+|                |                                              |                   |
+|                |                                              |                   |
+|                |______________________________________________|                   |
+|                                                                                   |
+|___________________________________________________________________________________|
+						</pre>
+
+						---
+
+						## Normal flow
+
+						<pre style="width: auto; display: inline-block; letter-spacing: 0.1px; line-height: 20px;">
+ ___________________________________________________________________________________
+|                                PUBLISHER SITE                                     |
+|                                                                                   |
+|                              Garðr host library                                   |
+|                                                                                   |
+|                                                                                   |
+|                 ______________________________________________                    |
+|                |                   IFRAME                     |                   |
+|                |                                              |                   |
+|                |              Load Garðr ext.js               |                   |
+|                |        Read parameter-JSON from URL/name     |                   |
+|                |           <strong>document.write(params.url);</strong>        |                   |
+|                |                                              |                   |
+|                |______________________________________________|                   |
+|                                                                                   |
+|___________________________________________________________________________________|
+						</pre>
+
+						---
+
+						## Normal flow
+
+						<pre style="width: auto; display: inline-block; letter-spacing: 0.1px; line-height: 20px;">
+ ___________________________________________________________________________________
+|                                PUBLISHER SITE                                     |
+|                                                                                   |
+|                              Garðr host library                                   |
+|                                                                                   |
+|                                                                                   |
+|                 ______________________________________________                    |
+|                |                   IFRAME                     |                   |
+|                |                                              |                   |
+|                |              Load Garðr ext.js               |                   |
+|                |        Read parameter-JSON from URL/name     |                   |
+|                |           document.write(params.url);        |                   |
+|                |   <strong>On window.onload calculate rendered size</strong>   |                   |
+|                |______________________________________________|                   |
+|                                                                                   |
+|___________________________________________________________________________________|
+						</pre>
+
+						---
+
+						## Normal flow
+
+						<pre style="width: auto; display: inline-block; letter-spacing: 0.1px; line-height: 20px;">
+ ___________________________________________________________________________________
+|                                PUBLISHER SITE                                     |
+|                                                                                   |
+|                              Garðr host library                                   |
+|                                                                                   |
+|                                                                                   |
+|                 ____________________________________↑_________                    |
+|                |                   IFRAME           |         |                   |
+|                |                                    |         |                   |
+|                |        <strong>trigger cross domain 'rendered' event</strong> |                   |
+|                |                                    |         |                   |
+|                |                                    |         |                   |
+|                |   On window.onload calculate rendered size   |                   |
+|                |______________________________________________|                   |
+|                                                                                   |
+|___________________________________________________________________________________|
+						</pre>
+
+						---
+
+						## Normal flow
+
+						<pre style="width: auto; display: inline-block; letter-spacing: 0.1px; line-height: 20px;">
+___________________________________________________________________________________
+|                                PUBLISHER SITE                                     |
+|                                                                                   |
+|                              Garðr host library                                   |
+|                                                                                   |
+|                                             <strong>trigger callback</strong>                      |
+|                 ____________________________________↑_________                    |
+|                |                   IFRAME           |         |                   |
+|                |                                    |         |                   |
+|                |        trigger cross domain 'rendered' event |                   |
+|                |                                    |         |                   |
+|                |                                    |         |                   |
+|                |   On window.onload calculate rendered size   |                   |
+|                |______________________________________________|                   |
+|                                                                                   |
+|___________________________________________________________________________________|
+						</pre>
+
+						---
+
+						## Responsive by default
+						* Style your container to be responsive`<div>`<br/>
+						  ```html
+<div style="width:auto"></div>
+							```
+							<!-- .element class="aw ib" -->
+						* You only need to specify `height` to gardr
+							* `width` defaults to `100%`
+						* The ad needs to use `100%` width
+						* Use gardr-plugin-host-resize if you want to resize container based on rendered ad size
+
+						---
+
+						## The API
+
+						Two main libraries:
+
+						* gardr-host
+							Include on the parent page (publisher)
+						* gardr-ext
+							Include inside the iframe
+
+						---
+
+						## GARDR-HOST
+						<script src="http://wzrd.in/standalone/gardr-host@latest"></script>
+						```html
+						&lt;script src="http://wzrd.in/standalone/gardr-host@latest"&gt;&lt;/script&lt;
+						```
+						<pre><code contenteditable class="js">
+
+						</code></pre>
+					</script>
+				</section>
+
+				<section>
+					<h2>m.finn.no, iOS and Android - Aug. 2013</h2>
+
+					<!--iframe src="http://m.finn.no/bap/forsale/search.html" style="width:320px; height: 568px;"></iframe-->
+					<video src="video/mfinn.mov" class="stretch" style="width:600px; height:572px;" autoplay loop></video>
 				</section>
 
 
 				<section>
-					<h1>THE END</h1>
-					Gregers Gram Rygg / @gregersrygg
+					<h1>That's all</h1>
+					<h3>¿Questions?</h1>
+					<br/>
+					Gregers Gram Rygg<br/>
+					gregers@finn.no<br/>
+					@gregersrygg<br/>
 				</section>
 
 			</div>
@@ -340,7 +652,7 @@ document.getElementById("foo-bar").innerHTML = "awesome ad!";
 					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					/*{ src: 'plugin/rainbow/rainbow.js', async: true, callback: function() { return !!document.querySelector( 'code' ); } },*/
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlighting(); } },
 					/*{ src: 'plugin/prism/prism.js', callback: function() { return !!document.querySelector('[class*=language-]'); } },*/
 					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
 					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
