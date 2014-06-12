@@ -627,9 +627,9 @@ ________________________________________________________________________________
 
 					<section data-markdown data-separator="^---$" data-transition="slide">
 						<script type="text/template">
-						## Positions
+## Positions
 
-						<pre style="width: auto; display: inline-block; letter-spacing: 0.1px; line-height: 20px;">
+<pre style="width: auto; display: inline-block; letter-spacing: 0.1px; line-height: 20px;">
  ___________________________________________________________________________________
 | ______________________________________________________________  _________________ |
 ||                    Position name: top                        ||                 ||
@@ -652,13 +652,13 @@ ________________________________________________________________________________
 |                |______________________________________________||                 ||
 |                                                                |_________________||
 |___________________________________________________________________________________|
-						</pre>
+</pre>
 
-						---
+---
 
-						## The API
+## The API
 
-						```js
+```js
 var gardr = gardrHost({
 	iframeUrl: "http://ads.finn.no/gardr/iframe.html" // cross-domain
 });
@@ -676,26 +676,57 @@ gardr.queue('inline',{
 });
 
 gardr.renderAll(function (err, item) { /* called when banner renderd */ });
-						```
+```
 
-						---
+---
 
-						## Plugins
+## Plugins
 
-						* To avoid a huge library with every possible feature
-						* Easier to maintain
-						* publish-subscribe pattern
-						  * Loose coupling
-						  * Syncrounous publishing, so subscribers can change the published object
+* To avoid a huge library with every possible feature
+* Easier to maintain
+* publish-subscribe pattern
+  * Loose coupling
+  * Syncrounous publishing, so subscribers can change the published object
 
-						---
+---
+### plugin-ext-unique-token
 
-						### plugin-host-resize
+Gardr plugin to replace a token in the url with a unique value (for cache busting)
 
-						Gardr plugin to resize container to content size
-
-						```js
+```js
 // register the plugin
+gardrExt.plugin(uniqueToken);
+```
+
+Source code of the plugin
+
+```js
+var TOKEN = 'GARDR_UNIQUE_ID';
+
+// the plugin function
+function uniqueToken (gardrPluginApi) {
+  // subscribe to params:parsed
+  gardrPluginApi.on('params:parsed', replaceUniqueToken);
+}
+
+function replaceUniqueToken (params) {
+  // replace all occurrences of the token with
+  // timestamp + item id
+  params.url = params.url
+                     .split(TOKEN)
+                     .join(new Date()
+                     .getTime() + (params.id));
+}
+```
+
+---
+
+### plugin-host-resize
+
+Gardr plugin to resize container to content size
+
+```js
+/* register the plugin */
 gardrHost.plugin(resize);
 
 var gardr = gardrHost({
@@ -706,14 +737,14 @@ gardr.queue('right', {
     container: 'banner_right', url: rightBannerUrl, width: 424, height: 600,
     resizeHorizontal: true // enable horizontal resizing for this position
 });
-						```
+```
 
-						---
+---
 
-						## Inside the plugin
+## Inside the plugin
 
-						This is the source code for plugin-host-resize
-						```js
+This is the source code for plugin-host-resize
+```js
 function resize (gardrPluginApi) {
 
   // register subscriber for item:afterrender
@@ -731,7 +762,7 @@ function resize (gardrPluginApi) {
     }
   });
 }
-						```
+```
 
 					</script>
 				</section>
