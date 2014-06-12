@@ -66,7 +66,7 @@
 					<video src="video/mfinn.mov" class="stretch" style="width:600px; height:572px;" autoplay loop></video>
 				</section>
 
-				<section data-markdown data-separator="^---$">
+        <section data-markdown data-separator="^---$">
 					<script type="text/template">
 						## ads @ FINN.no
 
@@ -625,7 +625,7 @@ ________________________________________________________________________________
 						</pre>
 					</section>
 
-					<section data-markdown data-separator="^---$" data-transition="slide">
+					<section data-markdown data-separator="^---$" data-vertical="^--$" data-transition="slide">
 						<script type="text/template">
 ## Positions
 
@@ -764,6 +764,47 @@ function resize (gardrPluginApi) {
 }
 ```
 
+---
+
+## Code style
+
+A bit out of scope, but relevant to get started.
+![CommonJS](/img/commonjs.png)<!-- .element style="height:80px" --><br/>
++<br/>
+![NPM](/img/npm.png)<!-- .element style="height:60px" --><br/>
++<br/>
+![Browserify](/img/browserify.png)<!-- .element style="height:80px" --><br/>
+=<br/>
+![Heart](/img/heart.png)<!-- .element style="height:150px" -->
+
+--
+
+![CommonJS](/img/commonjs.png)<!-- .element style="height:80px" --><br/>
+A.k.a. NodeJS style
+
+```js
+var gardrHost = require('gardr-host');
+
+```
+
+* Simple, and well defined where to find dependencies
+* AMD has no clear definition of where it should find dependencies
+  * So need large config-files and they might not be consistent across projects
+
+
+--
+
+![NPM](/img/npm.png)<!-- .element style="height:60px" --><br/>
+
+NPM - “Node packaged modules”
+
+
+---
+
+## Where to learn more?
+
+gardr.github.io
+(soon gardr.org)
 					</script>
 				</section>
 
