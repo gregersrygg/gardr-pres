@@ -2,10 +2,6 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<!--
-			This file is licensed under the Creative Commons Attribution-ShareAlike 2.5 Generic license.
-		-->
-
 		<title>reveal.js - The HTML Presentation Framework</title>
 
 		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
@@ -20,7 +16,7 @@
 		<link rel="stylesheet" href="css/theme/default.css" id="theme">
 
 		<!-- For syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<link rel="stylesheet" href="lib/css/tomorrow-night-eighties.css">
 
 		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
 		<script>
@@ -60,9 +56,18 @@
 							* New team
 							* kart
 							* async banner loading
+					</script>
+				</section>
 
-						---
+				<section>
+					<h2>Responsive ads apps&amp;web - Aug. 2013</h2>
 
+					<!--iframe src="http://m.finn.no/bap/forsale/search.html" style="width:320px; height: 568px;"></iframe-->
+					<video src="video/mfinn.mov" class="stretch" style="width:600px; height:572px;" autoplay loop></video>
+				</section>
+
+				<section data-markdown data-separator="^---$">
+					<script type="text/template">
 						## ads @ FINN.no
 
 						1. (Advertisment spec)<!-- .element: class="fragment" -->
@@ -155,12 +160,14 @@
 					<script type="text/template">
 						## document.write?
 
-						<pre style="margin:0px;box-shadow:none;"><code>&lt;script type="text/javascript"&gt;
+						<div style="background-color: #2d2d2d" class="ib">
+						<pre style="margin:0px;box-shadow:none;" class="aw"><code>&lt;script type="text/javascript"&gt;
 								document.write( "<div>awesome ad!</div>" );
 						&lt;/script&gt;
 						</code></pre>
-						<pre style="margin:0px;box-shadow:none;"><code><div>awesome ad!</div></code></pre> <!-- .element: class="fragment" -->
-						<pre style="margin:0px;box-shadow:none;"><code><div>Page content</div></code></pre>
+						<pre style="margin:0px;box-shadow:none;" class="aw"><code><div>awesome ad!</div></code></pre> <!-- .element: class="fragment" -->
+						<pre style="margin:0px;box-shadow:none;" class="aw"><code><div>Page content</div></code></pre>
+						</div>
 
 
 						> Writes a string of text to a document stream...
@@ -201,20 +208,24 @@ $j.getScript(bannerUrl);
 
 						## Whops, not so simple :/
 
-						```
+						```js
 document.write("<div id=\"foo-bar\"></div>");
 // now the div is in the buffer instead of the document
 document.getElementById("foo-bar").innerHTML = "awesome ad!";
 						```
 
-						<pre style="color:red;"><img src="img/error.svg" style="height:21px" /> TypeError: Cannot set property 'innerHTML' of null</pre>
+						<pre style="color:red; background:#2d2d2d; line-height: 40px;"><img src="img/error.svg" style="height:40px; vertical-align: middle;" /> <span style="vertical-align: middle;">TypeError: Cannot set property 'innerHTML' of null</span></pre>
 
 						---
 
 						## 2nd attempt (nov 2010)
 
-						A more sophisticated document.write hack:
+						A more sophisticated document.write hack with a not so sophisticated name:
 						https://github.com/gregersrygg/crapLoader
+
+						---
+
+						## crapLoader
 
 						* Works with multiple positions
 						* Load (almost) any **third-party script asynchronously**
@@ -230,7 +241,7 @@ document.getElementById("foo-bar").innerHTML = "awesome ad!";
 
 						---
 
-						## Problems when replacing document.write
+						#### Problems when replacing document.write
 						<small>
 
 						* You never know for sure that all ads will load correctly
@@ -305,7 +316,7 @@ document.getElementById("foo-bar").innerHTML = "awesome ad!";
 
 				<section data-markdown data-separator="^---$">
 					<script type="text/template">
-						## 5th attempt - Garðr (2013/2014)
+						### 5th attempt - Garðr 2013
 
 						* Open Source
 						 - Force clean architecture
@@ -419,8 +430,8 @@ xde.on("resize", function (evt) {
 |                                                                                   |
 |                                                                                   |
 |                                                                                   |
-|                                <strong>Create &lt;iframe&gt;</strong>                                    |
-|                               <strong>parameters as JSON</strong>                                  |
+|                                <span class="string">Create &lt;iframe&gt;</span>                                    |
+|                               <span class="string">parameters as JSON</span>                                  |
 |                                                                                   |
 |                                                                                   |
 |                                                                                   |
@@ -442,9 +453,9 @@ xde.on("resize", function (evt) {
 |                                                                                   |
 |                                                                                   |
 |                 ______________________________________________                    |
-|                |                   <strong>IFRAME</strong>                     |                   |
+|                |                   <span class="string">IFRAME</span>                     |                   |
 |                |                                              |                   |
-|                |              <strong>Load Garðr ext.js</strong>               |                   |
+|                |              <span class="string">Load Garðr ext.js</span>               |                   |
 |                |                                              |                   |
 |                |                                              |                   |
 |                |                                              |                   |
@@ -468,7 +479,7 @@ xde.on("resize", function (evt) {
 |                |                   IFRAME                     |                   |
 |                |                                              |                   |
 |                |              Load Garðr ext.js               |                   |
-|                |        <strong>Read parameter-json from url/name</strong>     |                   |
+|                |        <span class="string">Read parameter-json from url/name</span>     |                   |
 |                |                                              |                   |
 |                |                                              |                   |
 |                |______________________________________________|                   |
@@ -492,7 +503,7 @@ xde.on("resize", function (evt) {
 |                |                                              |                   |
 |                |              Load Garðr ext.js               |                   |
 |                |        Read parameter-JSON from URL/name     |                   |
-|                |           <strong>document.write(params.url);</strong>        |                   |
+|                |           <span class="string">document.write(params.url);</span>        |                   |
 |                |                                              |                   |
 |                |______________________________________________|                   |
 |                                                                                   |
@@ -516,7 +527,7 @@ xde.on("resize", function (evt) {
 |                |              Load Garðr ext.js               |                   |
 |                |        Read parameter-JSON from URL/name     |                   |
 |                |           document.write(params.url);        |                   |
-|                |   <strong>On window.onload calculate rendered size</strong>   |                   |
+|                |   <span class="string">On window.onload calculate rendered size</span>   |                   |
 |                |______________________________________________|                   |
 |                                                                                   |
 |___________________________________________________________________________________|
@@ -536,7 +547,7 @@ xde.on("resize", function (evt) {
 |                 ____________________________________↑_________                    |
 |                |                   IFRAME           |         |                   |
 |                |                                    |         |                   |
-|                |        <strong>trigger cross domain 'rendered' event</strong> |                   |
+|                |        <span class="string">trigger cross domain 'rendered' event</span> |                   |
 |                |                                    |         |                   |
 |                |                                    |         |                   |
 |                |   On window.onload calculate rendered size   |                   |
@@ -555,7 +566,7 @@ ________________________________________________________________________________
 |                                                                                   |
 |                              Garðr host library                                   |
 |                                                                                   |
-|                                             <strong>trigger callback</strong>                      |
+|                                             <span class="string">trigger callback</span>                      |
 |                 ____________________________________↑_________                    |
 |                |                   IFRAME           |         |                   |
 |                |                                    |         |                   |
@@ -568,50 +579,162 @@ ________________________________________________________________________________
 |___________________________________________________________________________________|
 						</pre>
 
-						---
+						</script>
+					</section>
 
+					<section data-markdown data-separator="^---$" data-transition="slide">
+						<script type="text/template">
 						## Responsive by default
-						* Style your container to be responsive`<div>`<br/>
+
+						* Style your container to be responsive<br/>
 						  ```html
-<div style="width:auto"></div>
+						<div style="width:auto"></div>
 							```
 							<!-- .element class="aw ib" -->
 						* You only need to specify `height` to gardr
-							* `width` defaults to `100%`
+							* iframe `width` defaults to `100%` of container
 						* The ad needs to use `100%` width
-						* Use gardr-plugin-host-resize if you want to resize container based on rendered ad size
+						* Use `gardr-plugin-host-resize` if you want to resize container based on rendered ad size
+
+						</script>
+					</section>
+
+					<section>
+						<h2>Iframe html</h2>
+						Comes with <a href="https://github.com/gardr/ext">gardr-ext</a>
+
+						<pre>
+							<code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;&lt;head&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /&gt;
+  &lt;meta name="robots" content="none" /&gt;
+  &lt;style&gt;* { padding: 0; margin: 0; border: 0; }&lt;/style&gt;
+  &lt;script&gt;
+    if (!Function.prototype.bind) {
+      var es5shim = ['&lt;scr','ipt src=\'',
+        '//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.1.0/es5-shim.min.js',
+        '\'&gt;&lt;/scr','ipt&gt;'].join('');
+      document.write(es5shim);
+    }
+  &lt;/script&gt;
+&lt;/head&gt;&lt;body&gt;
+  &lt;script src="ext.js"&gt;&lt;/script&gt;
+&lt;/body&gt;&lt;/html&gt;
+							</code>
+						</pre>
+					</section>
+
+					<section data-markdown data-separator="^---$" data-transition="slide">
+						<script type="text/template">
+						## Positions
+
+						<pre style="width: auto; display: inline-block; letter-spacing: 0.1px; line-height: 20px;">
+ ___________________________________________________________________________________
+| ______________________________________________________________  _________________ |
+||                    Position name: top                        ||                 ||
+||                    Size: 980px × 150px                       ||                 ||
+||                    Container: #banner_top                    ||                 ||
+||______________________________________________________________|| Position name:  ||
+|                                                                |     right       ||
+|                                                                |                 ||
+|                                                                |     Size:       ||
+|                                                                |  424px × 600px  ||
+|                                                                |                 ||
+|                                                                |   Container:    ||
+|                                                                |  #banner_right  ||
+|                                                                |                 ||
+|                                                                |                 ||
+|                 ______________________________________________ |                 ||
+|                |             Position name: inline            ||                 ||
+|                |             Size: 100% × 225px               ||                 ||
+|                |             Container: #banner_inline        ||                 ||
+|                |______________________________________________||                 ||
+|                                                                |_________________||
+|___________________________________________________________________________________|
+						</pre>
 
 						---
 
 						## The API
 
-						Two main libraries:
+						```js
+var gardr = gardrHost({
+	iframeUrl: "http://ads.finn.no/gardr/iframe.html" // cross-domain
+});
 
-						* gardr-host
-							Include on the parent page (publisher)
-						* gardr-ext
-							Include inside the iframe
+gardr.queue('top', {
+	container: 'banner_top', url: topBannerUrl, width: 980, height: 150
+});
+
+gardr.queue('right',{
+	container: 'banner_right', url: rightBannerUrl, width: 424, height: 600
+});
+
+gardr.queue('inline',{
+	container: 'banner_inline', url: inlineBannerUrl, height: 225
+});
+
+gardr.renderAll(function (err, item) { /* called when banner renderd */ });
+						```
 
 						---
 
-						## GARDR-HOST
-						<script src="http://wzrd.in/standalone/gardr-host@latest"></script>
-						```html
-						&lt;script src="http://wzrd.in/standalone/gardr-host@latest"&gt;&lt;/script&lt;
-						```
-						<pre><code contenteditable class="js">
+						## Plugins
 
-						</code></pre>
+						* To avoid a huge library with every possible feature
+						* Easier to maintain
+						* publish-subscribe pattern
+						  * Loose coupling
+						  * Syncrounous publishing, so subscribers can change the published object
+
+						---
+
+						### plugin-host-resize
+
+						Gardr plugin to resize container to content size
+
+						```js
+// register the plugin
+gardrHost.plugin(resize);
+
+var gardr = gardrHost({
+    iframeUrl: "http://ads.finn.no/gardr/iframe.html" // cross-domain
+});
+
+gardr.queue('right', {
+    container: 'banner_right', url: rightBannerUrl, width: 424, height: 600,
+    resizeHorizontal: true // enable horizontal resizing for this position
+});
+						```
+
+						---
+
+						## Inside the plugin
+
+						This is the source code for plugin-host-resize
+						```js
+function resize (gardrPluginApi) {
+
+  // register subscriber for item:afterrender
+  gardrPluginApi.on('item:afterrender', function (item) {
+
+    // check if item has enabled horizontal resizing
+    if (item.options.resizeHorizontal) {
+      var container = item.options.container;
+
+      // resize main container
+      container.style.width = item.rendered.width + 'px';
+
+      // resize the iframe element
+      item.iframe.resize(item.rendered.width, item.iframe.height);
+    }
+  });
+}
+						```
+
 					</script>
 				</section>
-
-				<section>
-					<h2>m.finn.no, iOS and Android - Aug. 2013</h2>
-
-					<!--iframe src="http://m.finn.no/bap/forsale/search.html" style="width:320px; height: 568px;"></iframe-->
-					<video src="video/mfinn.mov" class="stretch" style="width:600px; height:572px;" autoplay loop></video>
-				</section>
-
 
 				<section>
 					<h1>That's all</h1>
