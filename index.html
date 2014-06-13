@@ -80,8 +80,8 @@
 				</section>
 
 				<section>
-					<iframe src="http://validator.finn.no/" style="width:800px;height:500px;"></iframe>
-
+					<!--iframe src="http://validator.finn.no/" style="width:800px;height:500px;"></iframe-->
+          <video src="video/validator.mov" class="stretch" style="width:2000px; height:1340px;" autoplay loop></video>
 					<aside class="notes">
 						For both ad producers and publishers
 					</aside>
@@ -328,7 +328,8 @@ document.getElementById("foo-bar").innerHTML = "awesome ad!";
 						* Cross-domain support for security
 						 - Same origin policy prevents iframe from accessing parent
 						 - Use cross domain messaging (postMessage) for communication
-						* Responsive by default
+						* Responsive or fixed size
+            * Similar to SafeAds by iAB
 					</script>
 				</section>
 
@@ -798,13 +799,37 @@ var gardrHost = require('gardr-host');
 
 NPM - “Node packaged modules”
 
+* Not only for Node.js
+* Many modules for the browser
+* We publish gardr modules and use it to download dependencies
+
+--
+
+![Browserify](/img/browserify.png)<!-- .element style="height:80px" --><br/>
+
+* “Browser-side require() the node.js way”
+* “Browserify will recursively analyze all the require() calls in your app in order to build a bundle you can serve up to the browser in a single &lt;script&gt; tag.”
+* Can output as UMD, so it works with CommonJS, AMD or as a global.
+* Supports source maps
 
 ---
 
 ## Where to learn more?
 
-gardr.github.io
-(soon gardr.org)
+[gardr.org](gardr.org)
+
+Look at the Garðr sample project
+https://github.com/gardr/gardr
+
+Contact [Rune.Maurtvedt@finn.no](rune.maurtvedt@finn.no)
+
+---
+
+## Please contribute &hearts;
+
+Everything is on GitHub
+
+![GitHub Octocat](/img/Octocat.jpg)<!-- .element style="height:400px" --><br/>
 					</script>
 				</section>
 
