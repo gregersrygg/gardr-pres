@@ -246,6 +246,11 @@
 					currentSlide.contentWindow.Reveal.addEventListener( 'slidechanged', synchronizeMainWindow );
 					currentSlide.contentWindow.Reveal.addEventListener( 'fragmentshown', synchronizeMainWindow );
 					currentSlide.contentWindow.Reveal.addEventListener( 'fragmenthidden', synchronizeMainWindow );
+          window.opener.addEventListener('keydown', function (e) {
+            if (e.keyCode === 82) {
+              start = new Date();
+            }
+          }, false);
 
 				}
 				else {

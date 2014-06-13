@@ -2154,8 +2154,8 @@ var Reveal = (function(){
 	 * speaker notes window.
 	 */
 	function isSpeakerNotes() {
-
-		return !!window.location.search.match( /receiver/gi );
+    return !!window.location.href.indexOf('notes.html');
+		//return !!window.location.search.match( /receiver/gi );
 
 	}
 
