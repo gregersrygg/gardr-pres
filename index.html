@@ -316,20 +316,20 @@ document.getElementById("foo-bar").innerHTML = "awesome ad!";
 
 				<section data-markdown data-separator="^---$">
 					<script type="text/template">
-						### 5th attempt - Garðr 2013
+### 5th attempt - Garðr 2013
 
-						* Open Source
-						 - Force clean architecture
-						 - More use => more pressure on ad-providers
-						 - Contributions from others (hopefully)
-						* Small modular core with what most sites need
-						 - Small and mobile friendly (~5kB gzip * 2)
-						* Plugins for custom features
-						* Cross-domain support for security
-						 - Same origin policy prevents iframe from accessing parent
-						 - Use cross domain messaging (postMessage) for communication
-						* Responsive or fixed size
-            * Similar to SafeAds by iAB
+* Open Source
+ - Force clean architecture
+ - More use => more pressure on ad-providers
+ - Contributions from others (hopefully)
+* Small modular core with what most sites need
+ - Small and mobile friendly (~5kB gzip * 2)
+* Plugins for custom features
+* Cross-domain support for security
+ - Same origin policy prevents iframe from accessing parent
+ - Use cross domain messaging (postMessage) for communication
+* Responsive or fixed size
+* Similar to SafeAds by iAB
 					</script>
 				</section>
 
@@ -397,15 +397,13 @@ document.getElementById("foo-bar").innerHTML = "awesome ad!";
 
 						## cross-domain-events
 
-						Created a micro-lib to
-
 						> Event-like api for postMessage to send objects between cross-domain frames
 
 						```
 // notify parent about page size
 xde.sendTo(window.top, "resize", {
-    width: iframe.clientWidth,
-    height: iframe.clientHeight
+    width: document.body.clientWidth,
+    height: document.body.clientHeight
 });
 
 // parent page
@@ -600,32 +598,6 @@ ________________________________________________________________________________
 						</script>
 					</section>
 
-					<section>
-						<h2>Iframe html</h2>
-						Comes with <a href="https://github.com/gardr/ext">gardr-ext</a>
-
-						<pre>
-							<code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;&lt;head&gt;
-  &lt;meta charset="utf-8" /&gt;
-  &lt;meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /&gt;
-  &lt;meta name="robots" content="none" /&gt;
-  &lt;style&gt;* { padding: 0; margin: 0; border: 0; }&lt;/style&gt;
-  &lt;script&gt;
-    if (!Function.prototype.bind) {
-      var es5shim = ['&lt;scr','ipt src=\'',
-        '//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.1.0/es5-shim.min.js',
-        '\'&gt;&lt;/scr','ipt&gt;'].join('');
-      document.write(es5shim);
-    }
-  &lt;/script&gt;
-&lt;/head&gt;&lt;body&gt;
-  &lt;script src="ext.js"&gt;&lt;/script&gt;
-&lt;/body&gt;&lt;/html&gt;
-							</code>
-						</pre>
-					</section>
-
 					<section data-markdown data-separator="^---$" data-vertical="^--$" data-transition="slide">
 						<script type="text/template">
 ## Positions
@@ -799,8 +771,10 @@ var gardrHost = require('gardr-host');
 
 NPM - “Node packaged modules”
 
+* Follows with Node.js install
 * Not only for Node.js
 * Many modules for the browser
+* package.json describes a project and dependencies
 * We publish gardr modules and use it to download dependencies
 
 --
@@ -812,7 +786,37 @@ NPM - “Node packaged modules”
 * Can output as UMD, so it works with CommonJS, AMD or as a global.
 * Supports source maps
 
----
+</script>
+</section>
+
+<section>
+  <h2>Iframe html</h2>
+  Comes with <a href="https://github.com/gardr/ext">gardr-ext</a>
+
+  <pre>
+    <code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;&lt;head&gt;
+&lt;meta charset="utf-8" /&gt;
+&lt;meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /&gt;
+&lt;meta name="robots" content="none" /&gt;
+&lt;style&gt;* { padding: 0; margin: 0; border: 0; }&lt;/style&gt;
+&lt;script&gt;
+  if (!Function.prototype.bind) {
+    var es5shim = ['&lt;scr','ipt src=\'',
+    '//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.1.0/es5-shim.min.js',
+    '\'&gt;&lt;/scr','ipt&gt;'].join('');
+  document.write(es5shim);
+}
+&lt;/script&gt;
+&lt;/head&gt;&lt;body&gt;
+&lt;script src="ext.js"&gt;&lt;/script&gt;
+&lt;/body&gt;&lt;/html&gt;
+    </code>
+  </pre>
+</section>
+
+<section data-markdown data-separator="^---$" data-transition="slide">
+<script type="text/template">
 
 ## Where to learn more?
 
